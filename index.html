@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Predictor AI | Professional Price Valuation</title>
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Professional laptop price prediction system powered by machine learning.">
+
+    <!-- Design Resources -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+    <!-- Animated Background Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container" id="main-container">
+        <div class="header">
+            <span class="badge">AI-Powered Forecasting</span>
+            <h1>Spec2Price <br> Predicting Laptop Prices from Specifications</h1>
+            <p>Get precise, data-driven valuations based on the latest hardware specifications and market trends.</p>
+        </div>
+
+        <div class="predictor-card">
+            <div class="form-grid">
+                <!-- Company -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="building-2"></i>
+                        <label>Manufacturer</label>
+                    </div>
+                    <select id="company">
+                        {% for company in companies %}
+                        <option value="{{ company }}">{{ company }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Type -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="laptop"></i>
+                        <label>Computer Type</label>
+                    </div>
+                    <select id="type">
+                        {% for t in types %}
+                        <option value="{{ t }}">{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- RAM -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="cpu"></i>
+                        <label>RAM Capacity (GB)</label>
+                    </div>
+                    <select id="ram">
+                        <option value="2">2 GB</option>
+                        <option value="4">4 GB</option>
+                        <option value="6">6 GB</option>
+                        <option value="8" selected>8 GB</option>
+                        <option value="12">12 GB</option>
+                        <option value="16">16 GB</option>
+                        <option value="24">24 GB</option>
+                        <option value="32">32 GB</option>
+                        <option value="64">64 GB</option>
+                    </select>
+                </div>
+
+                <!-- Weight -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="anvil"></i>
+                        <label>Weight (kg)</label>
+                    </div>
+                    <input type="number" id="weight" step="0.1" value="1.5">
+                </div>
+
+                <!-- Touchscreen -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="fingerprint"></i>
+                        <label>Touchscreen Display</label>
+                    </div>
+                    <select id="touchscreen">
+                        <option value="0">Not Available</option>
+                        <option value="1">Available</option>
+                    </select>
+                </div>
+
+                <!-- IPS -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="monitor"></i>
+                        <label>IPS Panel Display</label>
+                    </div>
+                    <select id="ips">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <!-- Screen Size -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="maximize"></i>
+                        <label>Screen Size (inches)</label>
+                    </div>
+                    <input type="number" id="screen_size" step="0.1" value="15.6">
+                </div>
+
+                <!-- Resolution -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="grid-3x3"></i>
+                        <label>Resolution</label>
+                    </div>
+                    <select id="resolution">
+                        <option value="1920x1080">Full HD (1920x1080)</option>
+                        <option value="1366x768">HD (1366x768)</option>
+                        <option value="1600x900">HD+ (1600x900)</option>
+                        <option value="3840x2160">4K Ultra HD (3840x2160)</option>
+                        <option value="3200x1800">QHD+ (3200x1800)</option>
+                        <option value="2880x1800">Retina Display (2880x1800)</option>
+                        <option value="2560x1600">WQXGA (2560x1600)</option>
+                        <option value="2560x1440">Quad HD (2560x1440)</option>
+                        <option value="2304x1440">Retina (2304x1440)</option>
+                    </select>
+                </div>
+
+                <!-- CPU -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="microchip"></i>
+                        <label>CPU Processor</label>
+                    </div>
+                    <select id="cpu">
+                        {% for cpu in cpus %}
+                        <option value="{{ cpu }}">{{ cpu }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- GPU -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="zap"></i>
+                        <label>GPU Brand</label>
+                    </div>
+                    <select id="gpu">
+                        {% for gpu in gpus %}
+                        <option value="{{ gpu }}">{{ gpu }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- HDD -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="hard-drive"></i>
+                        <label>HDD Storage (GB)</label>
+                    </div>
+                    <select id="hdd">
+                        <option value="0">None</option>
+                        <option value="128">128 GB</option>
+                        <option value="256">256 GB</option>
+                        <option value="512">512 GB</option>
+                        <option value="1000">1 TB</option>
+                        <option value="2000">2 TB</option>
+                    </select>
+                </div>
+
+                <!-- SSD -->
+                <div class="form-group">
+                    <div class="label-container">
+                        <i data-lucide="database"></i>
+                        <label>SSD Storage (GB)</label>
+                    </div>
+                    <select id="ssd">
+                        <option value="0">None</option>
+                        <option value="128">128 GB</option>
+                        <option value="256" selected>256 GB</option>
+                        <option value="512">512 GB</option>
+                        <option value="1000">1 TB</option>
+                    </select>
+                </div>
+
+                <!-- OS -->
+                <div class="form-group full-width">
+                    <div class="label-container">
+                        <i data-lucide="terminal-square"></i>
+                        <label>Operating System</label>
+                    </div>
+                    <select id="os">
+                        {% for os in os_list %}
+                        <option value="{{ os }}">{{ os }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button class="predict-btn" onclick="predictPrice()">
+                <i data-lucide="sparkles"></i>
+                <span>Analyze Performance & Predict</span>
+            </button>
+
+            <div id="result">
+                <span class="res-label">Estimated Market Value</span>
+                <div id="predicted-price">---</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Entry Animations
+        gsap.from(".header", { opacity: 0, y: -50, duration: 1, ease: "power4.out" });
+        gsap.from(".predictor-card", { opacity: 0, y: 100, duration: 1.2, delay: 0.2, ease: "power4.out" });
+        gsap.from(".form-group", {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            stagger: 0.05,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+
+        async function predictPrice() {
+            const btn = document.querySelector('.predict-btn');
+            const resultDiv = document.getElementById('result');
+            const priceSpan = document.getElementById('predicted-price');
+
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i><span>Analyzing Data...</span>';
+            lucide.createIcons();
+            btn.disabled = true;
+
+            const data = {
+                company: document.getElementById('company').value,
+                type: document.getElementById('type').value,
+                ram: document.getElementById('ram').value,
+                weight: document.getElementById('weight').value,
+                touchscreen: document.getElementById('touchscreen').value,
+                ips: document.getElementById('ips').value,
+                screen_size: document.getElementById('screen_size').value,
+                resolution: document.getElementById('resolution').value,
+                cpu: document.getElementById('cpu').value,
+                gpu: document.getElementById('gpu').value,
+                hdd: document.getElementById('hdd').value,
+                ssd: document.getElementById('ssd').value,
+                os: document.getElementById('os').value
+            };
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.predicted_price) {
+                    resultDiv.style.display = 'block';
+                    gsap.fromTo(resultDiv,
+                        { opacity: 0, scale: 0.8, y: 20 },
+                        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" }
+                    );
+
+                    // Animate Counter effect for price
+                    let obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: result.predicted_price,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        onUpdate: () => {
+                            priceSpan.innerHTML = '<span class="currency">PKR : </span>' + Math.floor(obj.val).toLocaleString();
+                        }
+                    });
+
+                } else if (result.error) {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('Connection error');
+            } finally {
+                btn.innerHTML = '<i data-lucide="sparkles"></i><span>Analyze Performance & Predict</span>';
+                lucide.createIcons();
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>
